@@ -1,25 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import HaydenMoods from './data/index';
 import './App.css';
 
 function App() {
+  const [didClickButton, setButtonAsClicked] = useState(false);
+  const [haydenMood, setHaydenMood] = useState({});
+
+  const getHaydenMood = () => {
+    const numberOfHaydenMoods = HaydenMoods.length;
+    const randomHaydenMood =
+      HaydenMoods[Math.floor(Math.random() * numberOfHaydenMoods)];
+
+    setButtonAsClicked(true);
+    setHaydenMood(randomHaydenMood);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <main>
+      <header>
+        <h1>What "Hayden Mood" are you in today?</h1>
       </header>
-    </div>
+
+      <div class="mood-container">
+        {!didClickButton ? (
+          <button onClick={getHaydenMood}>Tell Me My "Hayden Mood"</button>
+        ) : (
+          <div className="mood">
+            <h2>{haydenMood.name}</h2>
+
+            <div className="image-container">
+              <img src={haydenMood.imageSource} alt="Hayden Looking Silly" />
+            </div>
+
+            <p>{haydenMood.description}</p>
+          </div>
+        )}
+      </div>
+    </main>
   );
 }
 
